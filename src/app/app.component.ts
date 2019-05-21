@@ -6,42 +6,27 @@ import { Component, ViewChild } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  name = 'Angular';
+
   text: any;
-  JSONData : any;
   headers = [];
   result = [];
-  // @ViewChild('fileImportInput') fileImportInput: any;
 
-  public csvRecords: any[] = [];
   @ViewChild('fileImportInput') fileImportInput: any;
 
   csvJSON(csvText) {
     var lines = csvText.split("\n");
-
     this.result = [];
-
     this.headers = lines[0].split(",");
-    console.log(this.headers);
     for (var i = 1; i < lines.length - 1; i++) {
-
-      var obj = {
-        invoiceNumber: String,
-        vendorNumber: String
-      };
-      // console.log(lines[i]);
+      var obj = {};
       var currentline = lines[i].split(',');
-      // console.log(currentline);
       for (var j = 0; j < this.headers.length; j++) {
-        obj[this.headers[j]] = currentline[j];
-        // console.log( currentline[j]);
+        obj[this.headers[j].trim()] = currentline[j];
       }
-      console.log(obj);
 
       this.result.push(obj);
 
     }
-    console.log(this.result[0]);
   }
 
 
@@ -51,13 +36,7 @@ export class AppComponent {
       var input = $event.target;
       var reader = new FileReader();
       reader.readAsText(input.files[0]);
-      reader.onload = (data) => {
-        // let csvData = reader.result;
-        // let csvRecordsArray = (csvData as string).split(/\r\n|\n/);
-        // for (let i = 1; i < csvRecordsArray.length; i++) {
-        //   let rowdata = csvRecordsArray[i].match(/(“[^”]*”)|[^,]+/g);
-        //   this.csvRecords.push(rowdata);
-        // }
+      reader.onload = () => {
         let text = reader.result;
         this.text = text;
         this.csvJSON(text);
@@ -68,7 +47,7 @@ export class AppComponent {
     } else {
       alert(`Please import valid .csv file.`);
       this.fileImportInput.nativeElement.value = '';
-      this.csvRecords = [];
+      this.result = [];
     }
   }
 }
