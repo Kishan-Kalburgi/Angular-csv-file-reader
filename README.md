@@ -1,3 +1,13 @@
-# angular-wzh2yc
+# Start Application
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-wzh2yc)
+npm install
+
+npm run
+
+## imput file format (.csv)
+
+col1,col2
+
+1234,4324
+
+5232,8975
